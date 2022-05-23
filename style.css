@@ -108,11 +108,6 @@ label{
 .center{
     text-align: center;
 }
-.final-score{
-    text-align: center;
-    font-size: 3rem;
-
-}
 
 @media screen and (max-width: 576px) {
     .container{
