@@ -108,7 +108,22 @@ label{
 .center{
     text-align: center;
 }
-
+.mb-2{
+  margin-bottom: 2rem;
+}
+.final-score{
+  font-size: 3rem;
+}
+.reloadBtn{
+  cursor: pointer;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 6px;
+  margin-left: auto;
+  color: #FFFFFF;
+  margin-right: auto;
+  background-color: rgb(168 85 247)
+}
 @media screen and (max-width: 576px) {
     .container{
         width:90%;

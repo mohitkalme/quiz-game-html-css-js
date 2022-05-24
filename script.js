@@ -50,10 +50,11 @@ const data = [
     checked: false,
   },
 ];
+
 const question = document.querySelector(".question");
 const options = document.getElementById("options");
 var questionNum = 0;
-var userAns = {};
+var userAnsObj = {};
 
 function printQuestion(questionNum) {
     const progress_bar = document.querySelector('.progress_bar');
@@ -97,7 +98,7 @@ function savingUserAns(e) {
 
        data[questionNum].userClickedOnOption = checkedInput.getAttribute("id");
         data[questionNum].checked = true;
-  userAns[questionNum] = userSelection;
+  userAnsObj[questionNum] = userSelection;
 
 }
 function nextQuestion() {
@@ -133,7 +134,13 @@ function prevQuestion() {
   }
 }
 function showResult() {
-    const userAnsArray = Object.values(userAns)
+
+  const prevBtn = document.querySelector(".prev");
+    prevBtn.classList.add("hidden");
+    const nextBtn = document.querySelector(".next");
+nextBtn.classList.add("hidden");
+
+    const userAnsArray = Object.values(userAnsObj)
     let score = 0;
 
     for (let index = 0; index < data.length; index++) {
@@ -146,10 +153,18 @@ function showResult() {
     }
    
   question.innerHTML = `
-    <div class="center">${score} out of 5 questions were correct.</div>
+  <div class="center mb-2">${userAnsArray.length} out of ${data.length} questions were Attempted.</div>
+    <div class="center mb-2">${score} out of ${data.length} questions were correct.</div>
     `;
   const percentageScore = (score / 5) * 100;
   options.innerHTML = `
-    <div class='final-score'>You Scored ${percentageScore}%</div>
+    <div class='final-score center mb-2'>You Scored ${percentageScore}%</div>
+    <div class="center">
+      <span class="reloadBtn" onclick="reloadWindow()">Take the Quiz Again</span>
+    </div>
     `;
+
+}
+function reloadWindow(){
+  location.reload();
 }
