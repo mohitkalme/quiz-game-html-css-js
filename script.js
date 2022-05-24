@@ -153,8 +153,8 @@ nextBtn.classList.add("hidden");
     }
    
   question.innerHTML = `
-  <div class="center mb-2">${userAnsArray.length} out of ${data.length} questions were Attempted.</div>
-    <div class="center mb-2">${score} out of ${data.length} questions were correct.</div>
+  <div class="center mb-2">Attempted questions: ${userAnsArray.length} out of ${data.length}</div>
+    <div class="center mb-2">Correct questions: ${score} out of ${data.length}</div>
     `;
   const percentageScore = (score / 5) * 100;
   options.innerHTML = `
