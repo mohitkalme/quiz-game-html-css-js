@@ -53,19 +53,19 @@ const data = [
 
 const question = document.querySelector(".question");
 const options = document.getElementById("options");
-var questionNum = 0;
-var userAnsObj = {};
+var questionNum = 0;//On which question are we at or which question is displayed in the window currently.
+var userAnsObj = {};//When user clicks on options they will be stored here;
 
-function printQuestion(questionNum) {
+function printQuestion(questionNum) {//This question takes the question from data and prints on the screen.
     const progress_bar = document.querySelector('.progress_bar');
-    percentage = ((questionNum + 1)/5)*100
-    progress_bar.style.width = `${percentage}%`
+    percentage = ((questionNum + 1)/ data.length)*100
+    progress_bar.style.width = `${percentage}%`//This changes width of progress_bar element.
     
   question.innerHTML = `${data[questionNum].id + 1}. ${
     data[questionNum].question
   }`;
-  const html = data[questionNum].options.map(
-    (opt, index, array) =>
+  const html = data[questionNum].options.map(//html becomes array of elements which are strings, so we join them and create a single string of elements.
+    (opt, index) =>
       `<label for=${index} class="radioContainer">
          <input type="radio" id=${index} name="option" value='${opt}'>
          ${opt}
@@ -74,9 +74,9 @@ function printQuestion(questionNum) {
   options.innerHTML = html.join("");
 
   const input = document.getElementById(
-    `${data[questionNum].userClickedOnOption}`
+    `${data[questionNum].userClickedOnOption}`//This shows what option we clicked earlier
   );
-  if (input === null) {
+  if (input === null) {// If input === null that means we didn't select any option and moved to next question.
    
   } else {
     input.setAttribute("checked", `${data[questionNum].checked}`);
@@ -96,14 +96,15 @@ function savingUserAns(e) {
   const checkedInput = e.target;
   const userSelection = e.target.value;
 
-       data[questionNum].userClickedOnOption = checkedInput.getAttribute("id");
+       data[questionNum].userClickedOnOption = checkedInput.getAttribute("id");//we are remembering what option user selected basically user clicked on which option.
         data[questionNum].checked = true;
-  userAnsObj[questionNum] = userSelection;
+  userAnsObj[questionNum] = userSelection;//we are creating an object of user answers with question number as key and clicked input value;
 
 }
-function nextQuestion() {
+
+function nextQuestion() {//When we click Next Button.
     const progress_bar = document.querySelector('.progress_bar');
-    percentage = ((questionNum + 1)/5)*100
+    percentage = ((questionNum + 1)/data.length)*100//Updating progress bar
     progress_bar.style.width = `${percentage}%`
     
   questionNum++;
@@ -112,51 +113,53 @@ function nextQuestion() {
     prevBtn.classList.remove("hidden");
   }
   printQuestion(questionNum);
-  if (questionNum === 4) {
-    const nextBtn = document.querySelector(".next");
+  if (questionNum === data.length - 1) {//when we reach last question of data array which holds all the questions.
+    const nextBtn = document.querySelector(".next");//we are changing Next button to submit button
     nextBtn.textContent = "Submit";
     nextBtn.setAttribute("onclick", "showResult()");
   }
 }
+
 function prevQuestion() {
     
   questionNum--;
   printQuestion(questionNum);
   if (questionNum === 0) {
     const prevBtn = document.querySelector(".prev");
-    prevBtn.classList.add("hidden");
+    prevBtn.classList.add("hidden");//Hiding the prev button when we reach first question
     printQuestion(questionNum);
   }
-  if(questionNum <4){
+  if(questionNum < data.length){
     const nextBtn = document.querySelector(".next");
-    nextBtn.textContent = "Next >";
+    nextBtn.textContent = "Next >";//Changing the submit button back to Next button if we clicked prev button on reaching last question of data array. 
     nextBtn.setAttribute("onclick", "nextQuestion()");
   }
 }
+
 function showResult() {
 
   const prevBtn = document.querySelector(".prev");
     prevBtn.classList.add("hidden");
-    const nextBtn = document.querySelector(".next");
+    const nextBtn = document.querySelector(".next");//Hiding Both buttons prev and next or submit button if we clicked submit button on reaching last question
 nextBtn.classList.add("hidden");
 
-    const userAnsArray = Object.values(userAnsObj)
-    let score = 0;
+    const userAnsArray = Object.values(userAnsObj)// changing userAnsObj to userAnsArray so we can use forEach method on it.
+    let score = 0;//Initialising score variable
 
     for (let index = 0; index < data.length; index++) {
-        const element = data[index];
+        const element = data[index];//Getting question object from data array.
         userAnsArray.forEach(item=>{
             if(item=== element.correctAns){
-                score++;
+                score++;//incrementing score variable if user answered correct.
             }
         })
     }
    
   question.innerHTML = `
   <div class="center mb-2">Attempted questions: ${userAnsArray.length} out of ${data.length}</div>
-    <div class="center mb-2">Correct questions: ${score} out of ${data.length}</div>
+    <div class="center mb-2">Correct answers: ${score}</div>
     `;
-  const percentageScore = (score / 5) * 100;
+  const percentageScore = (score / data.length) * 100;
   options.innerHTML = `
     <div class='final-score center mb-2'>You Scored ${percentageScore}%</div>
     <div class="center">
@@ -165,6 +168,7 @@ nextBtn.classList.add("hidden");
     `;
 
 }
+
 function reloadWindow(){
   location.reload();
 }
