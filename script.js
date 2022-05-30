@@ -53,7 +53,7 @@ const data = [
 
 const question = document.querySelector(".question");
 const options = document.getElementById("options");
-var questionNum = 0;//On which question are we at or which question is displayed in the window currently.
+var questionNum = 0;//On which question we are at or which question is displayed in the window currently.
 var userAnsObj = {};//When user clicks on options they will be stored here;
 
 function printQuestion(questionNum) {//This question takes the question from data and prints on the screen.
@@ -61,7 +61,7 @@ function printQuestion(questionNum) {//This question takes the question from dat
     percentage = ((questionNum + 1)/ data.length)*100
     progress_bar.style.width = `${percentage}%`//This changes width of progress_bar element.
     
-  question.innerHTML = `${data[questionNum].id + 1}. ${
+  question.innerHTML = `${data[questionNum].id + 1}. ${//This prints question on the screen
     data[questionNum].question
   }`;
   const html = data[questionNum].options.map(//html becomes array of elements which are strings, so we join them and create a single string of elements.
@@ -103,16 +103,13 @@ function savingUserAns(e) {
 }
 
 function nextQuestion() {//When we click Next Button.
-    const progress_bar = document.querySelector('.progress_bar');
-    percentage = ((questionNum + 1)/data.length)*100//Updating progress bar
-    progress_bar.style.width = `${percentage}%`
     
   questionNum++;
+  printQuestion(questionNum);
   if (questionNum > 0) {
     const prevBtn = document.querySelector(".prev");
     prevBtn.classList.remove("hidden");
   }
-  printQuestion(questionNum);
   if (questionNum === data.length - 1) {//when we reach last question of data array which holds all the questions.
     const nextBtn = document.querySelector(".next");//we are changing Next button to submit button
     nextBtn.textContent = "Submit";
