@@ -115,6 +115,7 @@ function nextQuestion() {//When we click Next Button.
     nextBtn.textContent = "Submit";
     nextBtn.setAttribute("onclick", "showResult()");
   }
+  
 }
 
 function prevQuestion() {
@@ -124,8 +125,8 @@ function prevQuestion() {
   if (questionNum === 0) {
     const prevBtn = document.querySelector(".prev");
     prevBtn.classList.add("hidden");//Hiding the prev button when we reach first question
-    printQuestion(questionNum);
   }
+  
   if(questionNum < data.length){
     const nextBtn = document.querySelector(".next");
     nextBtn.textContent = "Next >";//Changing the submit button back to Next button if we clicked prev button on reaching last question of data array. 
